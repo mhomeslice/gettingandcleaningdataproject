@@ -1,0 +1,5 @@
+fileURL <- "https://raw.githubusercontent.com/mhomeslice/gettingandcleaningdataproject/master/TidySummaryData.txt"
+download.file(fileURL, destfile = "TidySummaryData.txt" , method="curl")
+TidySummaryData <- read.table("TidySummaryData.txt")
+
+TidySummaryData <- read.table("TidySummaryData.txt")

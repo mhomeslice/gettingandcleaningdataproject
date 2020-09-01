@@ -1,0 +1,25 @@
+{
+    "id": "3FBADA19",
+    "path": "~/Documents/GitHub/gettingandcleaningdataproject/run_analysis.R",
+    "project_path": "run_analysis.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1598914129065.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "tempName": "Untitled1",
+        "cursorPosition": "68,19",
+        "scrollLine": "58"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1598935055,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1598935055726,
+    "read_only": false,
+    "read_only_alternatives": []
+}
