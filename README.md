@@ -1,5 +1,99 @@
 # gettingandcleaningdataproject
-Getting and Cleaning Data Project - Week 4
+Getting and Cleaning Data Project - Week 4 Course Project
+
+This is the course project for the Getting and Cleaning Data Coursera course. The R script, run_analysis.R, does the following:
+
+1. The files now need to be downloaded from the internet from a zip file and loaded into the files folder.
+2. Once all the files are downloaded they need to be loaded into the environment to use in R Studio.
+3. The first task is to merge the data sets together. To do this you either need to column bind first and then row bind, or row bind first, and then column bind. I chose to row bind first. and then create a new file named "Merged_UCI_Data" that had all of the needed raw data in it.
+4. Once the raw data is merged you need to then extract the identification data (subject and activity) and also any variables that have mean, or standard deviation data. 
+5. The next task was to change the code variable to more accurately describe the activity that it represents. by beginning to "tidy" the data with accurate labels it makes it easier to understand and analyze.
+6. Now that we have the data within the columns tidy, our next task is to tidy the labels for the columns. I decided to first loook at the current names of the columns to find out what I could change. I found a lot of abbreviations were being used so I tried to relabel what I could to clarify the variables. 
+7. The now that our data is Tidy, our next task is to create a new data table that has the summary statistics for mean and standard deviation. I am going to create a new data table called "TidySummaryData" that has only the means of the mean and standard devation data. I will then write this file so that I can hand it in for the assignment. 
+
+Final Summary File and code to upload it into your R program
+===================================================================
+fileURL <- "https://raw.githubusercontent.com/mhomeslice/gettingandcleaningdataproject/master/TidySummaryData.txt"
+download.file(fileURL, destfile = "TidySummaryData.txt" , method="curl")
+TidySummaryData <- read.table("TidySummaryData.txt")
+
+Here is the code with descriptions of what the code is doing (for more details see the codeboook markdown document)
+=======================================================================
+
+https://raw.githubusercontent.com/mhomeslice/gettingandcleaningdataproject/master/CodeBook.rmd
+
+## Load data and graphing programs
+library(dplyr)
+
+##Download Zip File
+if (!file.exists("UCIDataset.zip")){
+        fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+        download.file(fileURL, destfile = "UCIDataset.zip" , method="curl")
+}  
+
+if (!file.exists("UCIDataset")) { 
+        unzip("UCIDataset.zip") 
+}
+
+## Load all data frames from project files
+features <- read.table("UCI HAR Dataset/features.txt", col.names = c("n","functions"))
+activities <- read.table("UCI HAR Dataset/activity_labels.txt", col.names = c("code", "activity"))
+subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt", col.names = "subject")
+x_test <- read.table("UCI HAR Dataset/test/X_test.txt", col.names = features$functions)
+y_test <- read.table("UCI HAR Dataset/test/y_test.txt", col.names = "code")
+subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt", col.names = "subject")
+x_train <- read.table("UCI HAR Dataset/train/X_train.txt", col.names = features$functions)
+y_train <- read.table("UCI HAR Dataset/train/y_train.txt", col.names = "code")
+
+## Merge all training and test data sets
+
+X <- rbind(x_train, x_test)
+Y <- rbind(y_train, y_test)
+Subject <- rbind(subject_train, subject_test)
+Merge_UCI_Data <- cbind(Subject, Y, X)
+
+## Extract only the mean and standard deviation measurement
+TidyextractData <- Merge_UCI_Data %>%
+        select(subject, code, contains("mean"), contains("std"))
+
+## Use descriptive activity names in the dataset
+TidyextractData$code <- activities[TidyextractData$code, 2]
+
+## Write the Extracted Tidy Data to a file
+write.table(TidyextractData, "TidyExtractData.txt", row.name = FALSE)
+
+## Preview current column names
+names(TidyextractData)
+
+## Appropriately label the data set with descriptive names
+
+names(TidyextractData)[1] = "SubjectID"
+names(TidyextractData)[2] = "ActivityID"
+names(TidyextractData) <- gsub ("Acc", "Accelerometer", names(TidyextractData))
+names(TidyextractData) <- gsub ("Gyro", "Gyroscope", names(TidyextractData))
+names(TidyextractData) <- gsub ("BodyBody", "Body", names(TidyextractData))
+names(TidyextractData) <- gsub ("Mag", "Magnitude", names(TidyextractData))
+names(TidyextractData) <- gsub ("^t", "Time", names(TidyextractData))
+names(TidyextractData)<- gsub("^f", "Frequency", names(TidyextractData))
+names(TidyextractData) <- gsub("tBody", "TimeBody", names(TidyextractData))
+names(TidyextractData) <- gsub("mean", "Mean", names(TidyextractData), 
+        ignore.case = TRUE)
+names(TidyextractData) <- gsub("std", "STD", names(TidyextractData), 
+        ignore.case = TRUE)
+names(TidyextractData) <- gsub("-freq()", "Frequency", names(TidyextractData), 
+        ignore.case = TRUE)
+names(TidyextractData) <- gsub("angle", "Angle", names(TidyextractData))
+names(TidyextractData) <- gsub("gravity", "Gravity", names(TidyextractData))
+
+## Format data set to create a new data table with the average of each variable
+TidySummaryData <- TidyextractData %>%
+        group_by(SubjectID, ActivityID) %>%
+        summarise_all(funs(mean))
+
+## Write the summary output to a text file             
+write.table(TidySummaryData, "TidySummaryData.txt", row.name = FALSE)
+        
+
 
 Getting and Cleaning Data Course Project Directions and Guidance
 ===================================================================
