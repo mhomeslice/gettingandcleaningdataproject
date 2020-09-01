@@ -52,7 +52,7 @@ names(TidyextractData) <- gsub ("Mag", "Magnitude", names(TidyextractData))
 names(TidyextractData) <- gsub ("^t", "Time", names(TidyextractData))
 names(TidyextractData)<- gsub("^f", "Frequency", names(TidyextractData))
 names(TidyextractData) <- gsub("tBody", "TimeBody", names(TidyextractData))
-names(TidyextractData) <- gsub("mean", ".Mean", names(TidyextractData), 
+names(TidyextractData) <- gsub("mean", "Mean", names(TidyextractData), 
         ignore.case = TRUE)
 names(TidyextractData) <- gsub("std", "STD", names(TidyextractData), 
         ignore.case = TRUE)
