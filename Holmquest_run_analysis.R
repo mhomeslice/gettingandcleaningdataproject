@@ -39,6 +39,10 @@ colnames(subject_test) <- "subjectID"
 colnames(x_test) <- features[,2]
 colnames(y_test) <- "activityID"
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 68838c0cd9d5a42821a56328a1ef9c7fe19456ca
 ## Check dimensions on 
 dim(y_train)
 dim(x_train)
@@ -92,5 +96,9 @@ TidyFinalData <- FinalData %>%
         summarise_all(funs(mean))
 
 ## Write the summary output to a text file             
+<<<<<<< HEAD
 write.table(FinalData, "TidyFinalData.txt", row.name = FALSE)
+=======
+write.table(TidyFinalData, "TidyFinalData.txt", row.name = FALSE)
+>>>>>>> 68838c0cd9d5a42821a56328a1ef9c7fe19456ca
 
