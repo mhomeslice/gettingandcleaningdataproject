@@ -39,7 +39,6 @@ colnames(subject_test) <- "subjectID"
 colnames(x_test) <- features[,2]
 colnames(y_test) <- "activityID"
 
-
 ## Check dimensions on 
 dim(y_train)
 dim(x_train)
