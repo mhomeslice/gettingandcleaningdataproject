@@ -5,13 +5,13 @@ library(dplyr)
 if (!file.exists("UCIDataset.zip")){
         fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
         download.file(fileURL, destfile = "UCIDataset.zip" , method="curl")
-}  
-
-if (!file.exists("UCIDataset")) { 
-        unzip("UCIDataset.zip") 
 }
 
-##Files are in new folder names "UCI HAR Dataset". 
+if (!file.exists("UCIDataset")) {
+        unzip("UCIDataset.zip")
+}
+
+##Files are in new folder names "UCI HAR Dataset".
 ## What are the file names that we are interested in?
 list.files("UCI HAR Dataset", recursive=TRUE)
 
@@ -24,7 +24,7 @@ subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt")
 x_train <- read.table("UCI HAR Dataset/train/X_train.txt")
 y_train <- read.table("UCI HAR Dataset/train/y_train.txt")
 
-##Now download and look at the features and activity tables. 
+##Now download and look at the features and activity tables.
 features <- read.table("UCI HAR Dataset/features.txt")
 activities <- read.table("UCI HAR Dataset/activity_labels.txt")
 head(features)
@@ -39,11 +39,8 @@ colnames(subject_test) <- "subjectID"
 colnames(x_test) <- features[,2]
 colnames(y_test) <- "activityID"
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 68838c0cd9d5a42821a56328a1ef9c7fe19456ca
-## Check dimensions on 
+## Check dimensions on
 dim(y_train)
 dim(x_train)
 
@@ -79,13 +76,13 @@ names(FinalData) <- gsub ("Mag", "Magnitude", names(FinalData))
 names(FinalData) <- gsub ("^t", "Time", names(FinalData))
 names(FinalData)<- gsub("^f", "Frequency", names(FinalData))
 names(FinalData) <- gsub("tBody", "TimeBody", names(FinalData))
-names(FinalData) <- gsub("-mean()", "Mean", names(FinalData), 
+names(FinalData) <- gsub("-mean()", "Mean", names(FinalData),
         ignore.case = TRUE)
-names(FinalData) <- gsub("std", "STD", names(FinalData), 
+names(FinalData) <- gsub("std", "STD", names(FinalData),
         ignore.case = TRUE)
-names(FinalData) <- gsub("-freq()", "Frequency", names(FinalData), 
+names(FinalData) <- gsub("-freq()", "Frequency", names(FinalData),
         ignore.case = TRUE)
-names(FinalData) <- gsub("freq()", "Frequency", names(FinalData), 
+names(FinalData) <- gsub("freq()", "Frequency", names(FinalData),
                          ignore.case = TRUE)
 names(FinalData) <- gsub("angle", "Angle", names(FinalData))
 names(FinalData) <- gsub("gravity", "Gravity", names(FinalData))
@@ -95,10 +92,5 @@ TidyFinalData <- FinalData %>%
         group_by(subjectID, activityID) %>%
         summarise_all(funs(mean))
 
-## Write the summary output to a text file             
-<<<<<<< HEAD
-write.table(FinalData, "TidyFinalData.txt", row.name = FALSE)
-=======
+## Write the summary output to a text file
 write.table(TidyFinalData, "TidyFinalData.txt", row.name = FALSE)
->>>>>>> 68838c0cd9d5a42821a56328a1ef9c7fe19456ca
-
